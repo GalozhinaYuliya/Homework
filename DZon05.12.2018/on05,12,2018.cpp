@@ -37,7 +37,7 @@ int GetLengthArray(char oldarray[N])
 {
 	int length = 0;
 
-	while (oldarray[length])// escape последовательность
+	while (oldarray[length])// escape ГЇГ®Г±Г«ГҐГ¤Г®ГўГ ГІГҐГ«ГјГ­Г®Г±ГІГј
 	{
 		length++;
 	}
@@ -94,23 +94,6 @@ void DeleteWordLength(char oldarray[N], char word[N])
 		for (int j = pos; j < lenArray; j++)
 		{
 				oldarray[j] = oldarray[j + 1];
-		}
-	}
-}
-void DeleteWord(char oldarray[N], char word[N])
-{
-	int pos = searchWordInt(oldarray, word, 0);
-
-	int lenArray = GetLengthArray(oldarray);
-	int lenWord = GetLength(word);
-	for (int i = 0; i < lenWord; i++)
-	{
-		for (int j = pos; j < lenArray; j++)
-		{
-			if (oldarray[j] == word[i])
-			{
-				oldarray[j] = oldarray[j + 1];
-			}
 		}
 	}
 }
