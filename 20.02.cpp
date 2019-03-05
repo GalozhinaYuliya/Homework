@@ -1,13 +1,19 @@
 #include <iostream>
-#include "Arrays.h"
+#include "ArrayLibrary.h"
+
+typedef bool(*Predicate)(int*, int);
+
+typedef void(*Rule)(int*, int, int*);
 
 using namespace std;
+using namespace ArrayExtension;
 
-void IntArray(double* array, int*, int n);
-void Keys(const int* massive, int*, int n);
-void BubbleSort(int* massive, int* Ar, int n);
-void DisplayBubbleSortMax(int* massive, int n);
-void NewArray(const int* massive, int* newarray, int n, int a, int b, int &);
+void randomArray(int *, int);
+void displayArray(int*, int);
+int Key(int*, int);
+bool predicate(int*, int);
+void rule(int* , int , int* );
+int* NewArray(int* , int ,int*, Predicate , Rule);
 
 int main()
 {
@@ -22,103 +28,90 @@ int main()
 		}
 		cout << "Invalid data" << endl;
 	}
-	double* array = new double[n];
-	int* massive = new int[n];
-	int* Ar = new int[n];
-	int* newarray = new int[n];
-
-	InPutArray(array, n);
-	IntArray(array, massive, n);
-	Keys(massive, Ar, n);
-
-	BubbleSort(massive, Ar, n);
-
-	int a, b;
-	cout << "Please, enter quantity of ones a= ";
-	cin >> a;
+	int* firstmassive = new int(n);
+	int* secondmassive = new int(n);
+	
+	randomArray(firstmassive, n);
+	displayArray(firstmassive, n);
 	cout << endl;
-	cout << "Please, enter quantity of nulls b = ";
-	cin >> b;
 
-	int nNewArray = 0; // size of NewArray
-	NewArray(massive, newarray, n, a, b, nNewArray);
-	DisplayBubbleSortMax(newarray, nNewArray);
+	int* newarray = NewArray(firstmassive, n,secondmassive, predicate, rule);
 
+	displayArray(newarray, n);
+	cout << endl;
+	displayArray(secondmassive, n);
+	cout << endl;
 	system("pause");
-	return 0;
 }
-void IntArray(double* array, int* massive, int n)
+void randomArray(int* firstmassive, int n)
 {
 	for (int i = 0; i < n; i++)
 	{
-		massive[i] = (int)array[i];
+		firstmassive[i] = rand()%10;
 	}
 }
 
-void Keys(const int* massive, int* Ar, int n)
+void displayArray(int* firstmassive, int n)
 {
-	int one = 0;
 	for (int i = 0; i < n; i++)
 	{
-		int temp = massive[i];
-		while (temp)
-		{
-			if (temp % 2 == 1)
-			{
-				one++;
-			}
+		cout << firstmassive[i] << "  ";
+	}
+}
 
-			temp /= 2;
+int Key(int* firstmassive, int n)
+{
+	int min;
+	for (int i = 0; i < n; i++)
+	{
+		if (firstmassive[i-1] > firstmassive[i])
+		{
+			min = firstmassive[i];
 		}
-		Ar[i] = one;
-		one = 0;
 	}
+	return min;
 }
 
-void BubbleSort(int* massive, int* Ar, int n)
+bool predicate(int* firstmassive, int n)
 {
-	for (int i = 0; i < n - 1; i++)
-		for (int j = 0; j < n - i - 1; j++)
+	int min = Key(firstmassive, n);
+	for (int i = 0; i < n; i++)
+	{
+		if (firstmassive[i] % min && !(firstmassive[i + 1] % min))
 		{
-			if (massive[j] < massive[j + 1])
-			{
-				swap(massive[j], massive[j + 1]);
-				swap(Ar[j], Ar[j + 1]);
-			}
+			return firstmassive[i + 1];
 		}
-}
-void DisplayBubbleSortMax(int* massive, int n)
-{
-	for (int i = 0; i < n; i++)
-	{
-		cout << massive[i] << " ";
 	}
+
 }
 
-void NewArray(const int* massive, int* newarray, int n, int a, int b, int &sizeNewArray)
+void rule(int* firstmassive, int n, int* secondmassive)
 {
-	sizeNewArray = 0;
 	for (int i = 0; i < n; i++)
 	{
-		int one = 0, zero = 0;
-		int temp = massive[i];
-		while (temp)
+		for (int j = 0; j < n; j++)
 		{
-			if (temp % 2 == 1)
+			secondmassive[j] = firstmassive[i + 1];
+		}
+	}
+}
+int* NewArray(int* firstmassive, int n, int* secondmassive, Predicate predicate, Rule rule)
+{
+	int* newarray = new int(n);
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < n;)
+		{
+			if (predicate(firstmassive, n))
 			{
-				one++;
+				newarray[j] = firstmassive[i];
+				j++;
 			}
 			else
 			{
-				zero++;
+				rule(firstmassive, n, secondmassive);
 			}
-
-			temp /= 2;
-		}
-		if ((one != a) || (zero != b))
-		{
-			newarray[sizeNewArray] = massive[i];
-			sizeNewArray++;
 		}
 	}
+	return newarray;
 }
