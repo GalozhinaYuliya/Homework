@@ -9,7 +9,7 @@ using namespace std;
 using namespace ArrayExtension;
 
 void Array(int *, int);
-void displayArray(int*, int);
+void DisplayArray(int*, int);
 int GetKeys(int*, int);
 bool predicate(int, int, int);
 void DeleteElements(int*, int&, int);
@@ -30,9 +30,9 @@ int main()
 		cout << "Invalid data" << endl;
 	}
 
-	int* firstmassive = new int[n];//ââîäèëè 5 ýëåìåíòîâ, ìèíèìóìîì áðàëà 2, ýëåìíòàìè áûëè 2 4 7 9 5, â íîâûé ìàññèâ çàïèñûâàëèñü 7 , óäàëÿÿñü ïðè ýòîì èç ñòàðîãî
+	int* firstmassive = new int[n];//Ã¢Ã¢Ã®Ã¤Ã¨Ã«Ã¨ 5 Ã½Ã«Ã¥Ã¬Ã¥Ã­Ã²Ã®Ã¢, Ã¬Ã¨Ã­Ã¨Ã¬Ã³Ã¬Ã®Ã¬ Ã¡Ã°Ã Ã«Ã  2, Ã½Ã«Ã¥Ã¬Ã­Ã²Ã Ã¬Ã¨ Ã¡Ã»Ã«Ã¨ 2 4 7 9 5, Ã¢ Ã­Ã®Ã¢Ã»Ã© Ã¬Ã Ã±Ã±Ã¨Ã¢ Ã§Ã Ã¯Ã¨Ã±Ã»Ã¢Ã Ã«Ã¨Ã±Ã¼ 7 , Ã³Ã¤Ã Ã«Ã¿Ã¿Ã±Ã¼ Ã¯Ã°Ã¨ Ã½Ã²Ã®Ã¬ Ã¨Ã§ Ã±Ã²Ã Ã°Ã®Ã£Ã®
     Array(firstmassive, n);
-	displayArray(firstmassive, n);
+	DisplayArray(firstmassive, n);
 
 	
 
@@ -41,9 +41,9 @@ int main()
 	int* secondmassive = new int[m];
 	NewArray(firstmassive, n, secondmassive, predicate);
 
-	displayArray(secondmassive, m);
+	DisplayArray(secondmassive, m);
 	cout << endl;
-	displayArray(firstmassive, n);
+	DisplayArray(firstmassive, n);
 	cout << endl;
 	system("pause");
 }
@@ -57,7 +57,7 @@ void Array(int* firstmassive, int n)
 	}
 }
 
-void displayArray(int* firstmassive, int n)
+void DisplayArray(int* firstmassive, int n)
 {
 	for (int* j = firstmassive; j < firstmassive + n; j++)
 	{
